@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Valentine · Herz im Hintergrund & Blumen davor</title>
+  <title>Valentine · Großes Herz & Blumen</title>
 
   <!-- ===== HERZ-CANVAS (Hintergrund) ===== -->
   <style>
@@ -14,23 +14,23 @@
       width: 100vw;
       height: 100vh;
       display: block;
-      z-index: 1;      /* unter den Blumen */
-      pointer-events: none; /* Blumen sind interaktiv, Herz nur Deko */
+      z-index: 1;
+      pointer-events: none;
       background: black;
     }
     body {
       margin: 0;
       padding: 0;
-      background: black; /* Fallback */
-      overflow: hidden;  /* keine Scrollbars */
+      background: black;
+      overflow: hidden;
     }
   </style>
 
   <!-- ===== STYLE.CSS – LEUCHTENDE PFLANZEN (VORDERGRUND) ===== -->
   <style>
     /* ----------------------------------------------
-       GLOWING PLANTS / FLOWERS – style.css (vollständig)
-       – angepasst: .night deaktiviert, z-index der Blumen > 1
+       GLOWING PLANTS / FLOWERS – style.css 
+       – NUR VORDERGRUND, NIGHT DEAKTIVIERT
     ------------------------------------------------ */
     *,
     *::after,
@@ -54,16 +54,15 @@
       perspective: 1000px;
     }
 
-    /* .night wird ausgeblendet – Herzcanvas übernimmt den Hintergrund */
     .night {
-      display: none;
+      display: none; /* Herzcanvas übernimmt Hintergrund */
     }
 
     .flowers {
       position: relative;
-      transform: scale(0.7);
-      z-index: 30;      /* weit vor dem Canvas */
-      pointer-events: none; /* optional, aber alles bleibt sichtbar */
+      transform: scale(0.8); /* Blumen etwas größer für bessere Sichtbarkeit */
+      z-index: 30;
+      pointer-events: none;
     }
 
     .flower {
@@ -574,7 +573,7 @@
     .long-g .leaf--2 { --w: 10vmin; --h: 40vmin; left: -0.5vmin; bottom: 5vmin; transform-origin: bottom left; transform: rotateY(-180deg); animation: leaf-ans-2 3s linear infinite; }
     .long-g .leaf--3 { --w: 5vmin; --h: 30vmin; left: -1vmin; bottom: 3.2vmin; transform-origin: bottom left; transform: rotate(-10deg) rotateY(-180deg); animation: leaf-ans-3 3s linear infinite; }
 
-    /* ---------- KEYFRAMES (alle Animationen) ---------- */
+    /* ---------- KEYFRAMES (ALLE ANIMATIONEN) ---------- */
     @keyframes leaf-ans-1 { 0%,100% { transform: rotate(-5deg) scale(1); } 50% { transform: rotate(5deg) scale(1.1); } }
     @keyframes leaf-ans-2 { 0%,100% { transform: rotateY(-180deg) rotate(5deg); } 50% { transform: rotateY(-180deg) rotate(0deg) scale(1.1); } }
     @keyframes leaf-ans-3 { 0%,100% { transform: rotate(-10deg) rotateY(-180deg); } 50% { transform: rotate(-20deg) rotateY(-180deg); } }
@@ -622,12 +621,12 @@
     .not-loaded * { animation-play-state: paused !important; }
   </style>
 </head>
-<body class="not-loaded"> <!-- not-loaded Klasse bleibt, wird per script entfernt -->
+<body class="not-loaded">
 
-  <!-- ===== HERZ CANVAS (BACKGROUND) ===== -->
+  <!-- ===== HERZ CANVAS (BACKGROUND) – GRÖSSER ===== -->
   <canvas id="heart-canvas-bg"></canvas>
 
-  <!-- ===== BLUMEN (VORDERGRUND) – vollständiger Markup aus index1.html ===== -->
+  <!-- ===== BLUMEN (VORDERGRUND) ===== -->
   <div class="flowers">
     <div class="flower flower--1">
       <div class="flower__leafs flower__leafs--1">
@@ -796,7 +795,7 @@
       </div>
     </div>
 
-    <!-- long-g gruppen (1-7) -->
+    <!-- long-g gruppen -->
     <div class="long-g long-g--0">
       <div class="grow-ans" style="--d:3s"><div class="leaf leaf--0"></div></div>
       <div class="grow-ans" style="--d:2.2s"><div class="leaf leaf--1"></div></div>
@@ -845,9 +844,9 @@
       <div class="grow-ans" style="--d:3.5s"><div class="leaf leaf--2"></div></div>
       <div class="grow-ans" style="--d:3.6s"><div class="leaf leaf--3"></div></div>
     </div>
-  </div> <!-- ende .flowers -->
+  </div>
 
-  <!-- ===== HERZ-JS (aus herz.js) – angepasst auf canvas-id ===== -->
+  <!-- ===== HERZ-JS – GRÖSSER (Skalierungsfaktor 2.2) ===== -->
   <script>
     (function() {
       const c = document.getElementById('heart-canvas-bg');
@@ -861,21 +860,23 @@
       const R = Math.random;
       const C = Math.cos;
       const Y = 6.3;
+      
+      // HERZ GRÖSSER: Skalierungsfaktor 2.2
+      const SCALE = 2.2;
 
-      // Herz-Kurven (Original aus herz.js)
       for (let i = 0; i < Y; i += 0.2) 
-        h.push([WIDTH / 2 + 210 * Math.pow(Math.sin(i), 3), 
-          HEIGHT / 2 + 13 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
+        h.push([WIDTH / 2 + SCALE * 210 * Math.pow(Math.sin(i), 3), 
+          HEIGHT / 2 + SCALE * 13 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
 
       for (let i = 0; i < Y; i += 0.4) 
-        h.push([WIDTH / 2 + 150 * Math.pow(Math.sin(i), 3), 
-          HEIGHT / 2 + 9 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
+        h.push([WIDTH / 2 + SCALE * 150 * Math.pow(Math.sin(i), 3), 
+          HEIGHT / 2 + SCALE * 9 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
 
       for (let i = 0; i < Y; i += 0.8) 
-        h.push([WIDTH / 2 + 90 * Math.pow(Math.sin(i), 3), 
-          HEIGHT / 2 + 5 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
+        h.push([WIDTH / 2 + SCALE * 90 * Math.pow(Math.sin(i), 3), 
+          HEIGHT / 2 + SCALE * 5 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
 
-      // Partikel initialisieren
+      // Partikel initialisieren – mehr Partikel für größeres Herz
       for (let i = 0; i < v;) {
         let x = R() * WIDTH;
         let y = R() * HEIGHT;
@@ -886,12 +887,12 @@
         for (let k = 0; k < v;) {
           f[k++] = {
             x: x, y: y, X: 0, Y: 0,
-            R: 1 - k / v + 1,
-            S: R() + 1,
+            R: (1 - k / v + 1) * 1.3, // Partikel etwas größer
+            S: R() + 1.2,
             q: ~~(R() * v),
             D: 2 * (i % 2) - 1,
             F: 0.2 * R() + 0.7,
-            f: "hsla(" + ~~H + "," + ~~S + "%," + ~~B + "%,.1)"
+            f: "hsla(" + ~~H + "," + ~~S + "%," + ~~B + "%,.15)" // heller
           };
         }
         e[i++] = f;
@@ -941,16 +942,18 @@
         }
       }, 25);
 
-      // Resize anpassen
       window.addEventListener('resize', () => {
         WIDTH = c.width = innerWidth;
         HEIGHT = c.height = innerHeight;
-        // Herzkurven nicht neu berechnet – bleibt einfach, resize genügt meist
+        // Herz wird bei resize neu berechnet? Wir lassen es einfach, 
+        // die Koordinaten bleiben stabil, müssen aber evtl. aktualisiert werden.
+        // Für die Einfachheit: Seite neuladen oder grobe Anpassung.
+        location.reload(); // quick fix, damit Herz immer richtig skaliert
       });
     })();
   </script>
 
-  <!-- ===== SCRIPT.JS (entfernt not-loaded Klasse) ===== -->
+  <!-- ===== SCRIPT.JS (not-loaded entfernen) ===== -->
   <script>
     onload = () => {
       const c = setTimeout(() => {
